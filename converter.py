@@ -48,12 +48,13 @@ def get_word_documents(directory: str) -> List[str]:
             docs.append(os.path.join(directory, filename))
     return docs
 
-def batch_convert_to_pdf(input_dir: str, output_dir: str = None) -> Tuple[int, int]:
+def batch_convert_to_pdf(input_dir: str, output_dir: str = None, progress_callback=None) -> Tuple[int, int]:
     """
     Converts all Word documents in the input directory to PDF.
     
     :param input_dir: Directory containing .doc/.docx files.
     :param output_dir: Directory to save PDFs (defaults to ~/batch-doc-to-pdf-out).
+    :param progress_callback: Optional callable func(current_idx, total_files, filename)
     :return: A tuple of (successful_conversions, total_files)
     """
     if output_dir is None:
@@ -74,6 +75,9 @@ def batch_convert_to_pdf(input_dir: str, output_dir: str = None) -> Tuple[int, i
         filename = os.path.basename(file_path)
         print(f"[{i}/{total_files}] Converting {filename}...")
         
+        if progress_callback:
+            progress_callback(i, total_files, filename)
+            
         if convert_file_to_pdf(file_path, output_dir):
             successful += 1
             
