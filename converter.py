@@ -25,6 +25,15 @@ def convert_file_to_pdf(input_path: str, output_dir: str) -> bool:
         result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         
         if result.returncode == 0:
+            # Libreoffice saves the file replacing the extension with .pdf
+            base_name = os.path.splitext(os.path.basename(input_path))[0]
+            pdf_path = os.path.join(output_dir, base_name + ".pdf")
+            
+            # Preserve original timestamps
+            if os.path.exists(pdf_path):
+                original_stat = os.stat(input_path)
+                os.utime(pdf_path, (original_stat.st_atime, original_stat.st_mtime))
+                
             return True
         else:
             print(f"Error converting {input_path}:\n{result.stderr}")
@@ -46,6 +55,17 @@ def get_word_documents(directory: str) -> List[str]:
     for filename in os.listdir(directory):
         if filename.lower().endswith(('.doc', '.docx')) and not filename.startswith('~'):
             docs.append(os.path.join(directory, filename))
+            
+    # Sort files by creation date (or modification date as fallback on Linux)
+    def get_creation_time(filepath):
+        stat = os.stat(filepath)
+        try:
+            return stat.st_birthtime
+        except AttributeError:
+            return stat.st_mtime
+            
+    docs.sort(key=get_creation_time)
+    
     return docs
 
 def batch_convert_to_pdf(input_dir: str, output_dir: str = None, progress_callback=None) -> Tuple[int, int]:
