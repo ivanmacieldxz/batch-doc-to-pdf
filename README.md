@@ -13,4 +13,34 @@ A simple tool to batch convert `.doc` and `.docx` files to `.pdf` within a selec
 
 ## Usage
 
-*Instructions will be added as features are implemented.*
+### Command Line Interface (CLI)
+
+To run the converter from the terminal, provide the input directory containing your `.doc` or `.docx` files:
+
+```bash
+python main.py /path/to/input/directory
+```
+
+By default, the converted `.pdf` files will be saved in `~/batch-doc-to-pdf-out`. You can specify a different output directory using the `-o` or `--output-dir` flag:
+
+```bash
+python main.py /path/to/input/directory -o /path/to/output/directory
+```
+
+### Graphical User Interface (GUI)
+
+To use the graphical interface, you need to install the dependencies first. Since modern Linux distributions use externally managed Python environments, it's recommended to create a virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Once installed and with the virtual environment activated, simply run the main script without any arguments:
+
+```bash
+python main.py
+```
+
+This will open a window where you can select the input folder, optionally choose an output folder, and track the conversion progress visually.
