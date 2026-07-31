@@ -53,11 +53,11 @@ def batch_convert_to_pdf(input_dir: str, output_dir: str = None) -> Tuple[int, i
     Converts all Word documents in the input directory to PDF.
     
     :param input_dir: Directory containing .doc/.docx files.
-    :param output_dir: Directory to save PDFs (defaults to input_dir).
+    :param output_dir: Directory to save PDFs (defaults to ~/batch-doc-to-pdf-out).
     :return: A tuple of (successful_conversions, total_files)
     """
     if output_dir is None:
-        output_dir = input_dir
+        output_dir = os.path.join(os.path.expanduser("~"), "batch-doc-to-pdf-out")
         
     if not os.path.exists(output_dir):
         os.makedirs(output_dir, exist_ok=True)

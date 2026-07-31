@@ -18,7 +18,7 @@ def parse_args():
     parser.add_argument(
         "-o", "--output-dir",
         type=str,
-        help="The directory to save the PDF files. Defaults to the input directory.",
+        help="The directory to save the PDF files. Defaults to ~/batch-doc-to-pdf-out",
         default=None
     )
     
