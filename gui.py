@@ -1,12 +1,37 @@
 import os
 import threading
 import customtkinter as ctk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
 from converter import batch_convert_to_pdf
 
 # Setup appearance
 ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
+
+class ModernMessageBox(ctk.CTkToplevel):
+    def __init__(self, parent, title, message, btn_color="#3b8ed0"):
+        super().__init__(parent)
+        self.title(title)
+        self.geometry("450x220")
+        self.resizable(False, False)
+        
+        # Make the window modal (blocks interaction with the main window)
+        self.grab_set()
+        self.transient(parent)
+        
+        # Message Label
+        self.label = ctk.CTkLabel(self, text=message, font=ctk.CTkFont(family="Roboto", size=16), wraplength=400)
+        self.label.pack(pady=(40, 20), padx=20, expand=True, fill="both")
+        
+        # OK Button
+        self.btn = ctk.CTkButton(self, text="OK", width=120, height=40, font=ctk.CTkFont(family="Roboto", size=16, weight="bold"), command=self.destroy, fg_color=btn_color)
+        self.btn.pack(pady=(0, 20))
+        
+        # Center the dialog on screen
+        self.update_idletasks()
+        x = parent.winfo_x() + (parent.winfo_width() // 2) - (self.winfo_width() // 2)
+        y = parent.winfo_y() + (parent.winfo_height() // 2) - (self.winfo_height() // 2)
+        self.geometry(f"+{x}+{y}")
 
 class App(ctk.CTk):
     def __init__(self):
@@ -119,7 +144,9 @@ class App(ctk.CTk):
                 self.convert_btn.configure(state="normal", fg_color="#28a745")
                 self.input_btn.configure(state="normal")
                 self.output_btn.configure(state="normal")
-                messagebox.showinfo("Conversion Complete", f"Successfully converted {successful} out of {total} files.")
+                
+                # Show success modern dialog
+                ModernMessageBox(self, "Conversion Complete", f"Successfully converted {successful} out of {total} files.", btn_color="#28a745")
                 
             self.after(0, finalize_ui)
             
@@ -129,13 +156,15 @@ class App(ctk.CTk):
                 self.convert_btn.configure(state="normal", fg_color="#28a745")
                 self.input_btn.configure(state="normal")
                 self.output_btn.configure(state="normal")
-                messagebox.showerror("Error", f"An unexpected error occurred:\n{str(e)}")
+                
+                # Show error modern dialog
+                ModernMessageBox(self, "Error", f"An unexpected error occurred:\n{str(e)}", btn_color="#dc3545")
                 
             self.after(0, error_ui)
 
     def start_conversion(self):
         if not self.input_dir:
-            messagebox.showwarning("Warning", "Please select an input folder first.")
+            ModernMessageBox(self, "Warning", "Please select an input folder first.", btn_color="#ffc107")
             return
             
         # Disable buttons during conversion
