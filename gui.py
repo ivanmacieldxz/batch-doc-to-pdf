@@ -71,14 +71,31 @@ class App(ctk.CTk):
         self.convert_btn = ctk.CTkButton(self, text="Start Conversion", font=ctk.CTkFont(family="Roboto", size=22, weight="bold"), height=60, width=300, fg_color="#28a745", hover_color="#218838", command=self.start_conversion)
         self.convert_btn.pack(pady=(0, 40))
         
+    def ask_directory(self, title):
+        import platform
+        import subprocess
+        if platform.system() == "Linux":
+            try:
+                # Use native GTK dialog on Linux via zenity for a modern look
+                result = subprocess.run(["zenity", "--file-selection", "--directory", f"--title={title}"], capture_output=True, text=True)
+                if result.returncode == 0:
+                    return result.stdout.strip()
+                elif result.returncode == 1:
+                    return "" # User cancelled
+            except FileNotFoundError:
+                pass # Zenity not found, fallback to tkinter
+                
+        # Fallback to default tkinter dialog
+        return filedialog.askdirectory(title=title)
+
     def select_input_dir(self):
-        directory = filedialog.askdirectory(title="Select Input Folder")
+        directory = self.ask_directory("Select Input Folder")
         if directory:
             self.input_dir = directory
             self.input_label.configure(text=self.input_dir, text_color=("black", "white"))
             
     def select_output_dir(self):
-        directory = filedialog.askdirectory(title="Select Output Folder")
+        directory = self.ask_directory("Select Output Folder")
         if directory:
             self.output_dir = directory
             self.output_label.configure(text=self.output_dir, text_color=("black", "white"))
