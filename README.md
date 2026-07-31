@@ -29,13 +29,15 @@ python main.py /path/to/input/directory -o /path/to/output/directory
 
 ### Graphical User Interface (GUI)
 
-To use the graphical interface, you need to install the dependencies first. We use `customtkinter` for a modern look:
+To use the graphical interface, you need to install the dependencies first. Since modern Linux distributions use externally managed Python environments, it's recommended to create a virtual environment:
 
 ```bash
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Once installed, simply run the main script without any arguments:
+Once installed and with the virtual environment activated, simply run the main script without any arguments:
 
 ```bash
 python main.py

@@ -14,8 +14,8 @@ def main():
             # they don't strictly need GUI dependencies if we add them later.
             from gui import run_gui
             run_gui()
-        except ImportError:
-            print("GUI module not found or dependencies missing.")
+        except ImportError as e:
+            print(f"GUI dependencies missing: {e}")
             print("For now, please use the CLI mode by providing an input directory:")
             print("  python main.py /path/to/documents")
             sys.exit(1)
