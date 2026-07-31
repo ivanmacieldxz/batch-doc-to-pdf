@@ -29,4 +29,16 @@ python main.py /path/to/input/directory -o /path/to/output/directory
 
 ### Graphical User Interface (GUI)
 
-*GUI features are currently under development.*
+To use the graphical interface, you need to install the dependencies first. We use `customtkinter` for a modern look:
+
+```bash
+pip install -r requirements.txt
+```
+
+Once installed, simply run the main script without any arguments:
+
+```bash
+python main.py
+```
+
+This will open a window where you can select the input folder, optionally choose an output folder, and track the conversion progress visually.
