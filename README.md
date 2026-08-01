@@ -29,4 +29,18 @@ python main.py /path/to/input/directory -o /path/to/output/directory
 
 ### Graphical User Interface (GUI)
 
-*GUI features are currently under development.*
+To use the graphical interface, you need to install the dependencies first. Since modern Linux distributions use externally managed Python environments, it's recommended to create a virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Once installed and with the virtual environment activated, simply run the main script without any arguments:
+
+```bash
+python main.py
+```
+
+This will open a window where you can select the input folder, optionally choose an output folder, and track the conversion progress visually.
