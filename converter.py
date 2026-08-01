@@ -12,11 +12,11 @@ def convert_file_to_pdf(input_path: str, output_dir: str) -> bool:
     :return: True if conversion succeeded, False otherwise.
     """
     try:
-        # Construct the libreoffice headless command
+        # Construct the libreoffice headless command forcing PDF/A-1b to ensure ToUnicode CMaps
         command = [
             "libreoffice",
             "--headless",
-            "--convert-to", "pdf",
+            "--convert-to", 'pdf:writer_pdf_Export:{"SelectPdfVersion":{"type":"long","value":"1"}}',
             "--outdir", output_dir,
             input_path
         ]
