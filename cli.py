@@ -5,7 +5,7 @@ from converter import batch_convert_to_pdf
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Batch convert .doc and .docx files to .pdf"
+        description="Batch convert .doc, .docx, and .docm files to .pdf"
     )
     
     parser.add_argument(

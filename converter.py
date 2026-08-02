@@ -5,7 +5,7 @@ from typing import List, Tuple
 
 def convert_file_to_pdf(input_path: str, output_dir: str) -> bool:
     """
-    Converts a single .doc or .docx file to PDF using LibreOffice.
+    Converts a single .doc, .docx, or .docm file to PDF using LibreOffice.
     
     :param input_path: The absolute or relative path to the input document.
     :param output_dir: The directory where the PDF should be saved.
@@ -45,15 +45,15 @@ def convert_file_to_pdf(input_path: str, output_dir: str) -> bool:
 
 def get_word_documents(directory: str) -> List[str]:
     """
-    Finds all .doc and .docx files in a given directory.
+    Finds all .doc, .docx, and .docm files in a given directory.
     
     :param directory: The directory to search.
     :return: A list of file paths.
     """
     docs = []
-    # Search for .doc and .docx in the directory (case insensitive match on linux requires checking extensions)
+    # Search for .doc, .docx, and .docm in the directory (case insensitive match on linux requires checking extensions)
     for filename in os.listdir(directory):
-        if filename.lower().endswith(('.doc', '.docx')) and not filename.startswith('~'):
+        if filename.lower().endswith(('.doc', '.docx', '.docm')) and not filename.startswith('~'):
             docs.append(os.path.join(directory, filename))
             
     # Sort files by creation date (or modification date as fallback on Linux)
@@ -72,7 +72,7 @@ def batch_convert_to_pdf(input_dir: str, output_dir: str = None, progress_callba
     """
     Converts all Word documents in the input directory to PDF.
     
-    :param input_dir: Directory containing .doc/.docx files.
+    :param input_dir: Directory containing .doc/.docx/.docm files.
     :param output_dir: Directory to save PDFs (defaults to ~/batch-doc-to-pdf-out).
     :param progress_callback: Optional callable func(current_idx, total_files, filename)
     :return: A tuple of (successful_conversions, total_files)
@@ -88,7 +88,7 @@ def batch_convert_to_pdf(input_dir: str, output_dir: str = None, progress_callba
     successful = 0
     
     if total_files == 0:
-        print(f"No .doc or .docx files found in {input_dir}")
+        print(f"No .doc, .docx, or .docm files found in {input_dir}")
         return 0, 0
         
     for i, file_path in enumerate(files_to_convert, 1):

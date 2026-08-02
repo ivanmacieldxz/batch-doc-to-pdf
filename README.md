@@ -1,6 +1,6 @@
 # Batch Doc to PDF Converter
 
-A simple tool to batch convert `.doc` and `.docx` files to `.pdf` within a selected folder.
+A simple tool to batch convert `.doc`, `.docx`, and `.docm` files to `.pdf` within a selected folder.
 
 ## Features
 - **Command Line Interface (CLI):** Automate conversions in scripts or use it quickly from the terminal.
@@ -15,7 +15,7 @@ A simple tool to batch convert `.doc` and `.docx` files to `.pdf` within a selec
 
 ### Command Line Interface (CLI)
 
-To run the converter from the terminal, provide the input directory containing your `.doc` or `.docx` files:
+To run the converter from the terminal, provide the input directory containing your `.doc`, `.docx`, or `.docm` files:
 
 ```bash
 python main.py /path/to/input/directory
